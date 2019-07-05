@@ -30,7 +30,7 @@ Call the script from `telegraf.conf` like this
    timeout = "5s"
    data_format = "influx"
 ```
-Insert Grafana dashboard.json
+Import  Grafana dashboard https://grafana.com/dashboards/10482/ or from file
 
 ## Compatibility
 Tested on:
