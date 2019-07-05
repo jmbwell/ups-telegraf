@@ -26,13 +26,15 @@ Call the script from `telegraf.conf` like this
 ```
 [[inputs.exec]]
 
-   commands = ["python /path/to/getUpsData.py"]
+   commands = ["/path/to/getUpsData.py"]
    timeout = "5s"
    data_format = "influx"
 ```
+Insert Grafana dashboard.json
 
 ## Compatibility
 Tested on:
 * Cyberpower CP1000AVRLCDa
+* APC Back-UPS
 
 If you're using this with a different UPS, please let me know so I can add it to the list
