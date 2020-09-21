@@ -1,5 +1,5 @@
 # Description
-Get data from USB-connected UPS into InfluxDB using Telegraf
+Get data from USB-connected UPS from Network UPS Tools into InfluxDB using Telegraf
 
 Transforms `upsc` output like this:
 ```
