@@ -22,6 +22,7 @@ for line in p.stdout.readlines():
     value = line[line.find(":")+2:]
 
     if key in measurements and key in string_measurements:
+        value = value.replace(" ", "_")
         tag = key + "=" + value
         if tag_output != "":
             tag = "," + tag
