@@ -2,31 +2,35 @@
 
 import subprocess
 
-cmd="upsc ups"
+cmd="upsc Fortron@localhost"
+
 output=""
-# only needed measurement
-measurements=["battery.charge","battery.voltage","battery.runtime","input.voltage","ups.load",
-            "ups.beeper.status", "ups.mfr","ups.model", "ups.serial", "ups.status", "ups.test.result"]
-# text measurement
-string_measurements=["battery.mfr.date", "battery.type", "battery.date", "device.mfr", "device.model","device.serial","device.type",
-			"driver.name", "driver.paramter.port", "driver.parameter.synchronous", "driver.version", "driver.version.data", "driver.version.internal", "input.sensitivity",
-			"ups.beeper.status", "ups.mfr","ups.model", "ups.serial", "ups.status", "ups.test.result", "ups.firmware", "ups.firmware.aux","ups.mfr.date", "ups.productid",
-            "driver.parameter.port", "driver.parameter.syncronous"]
+tag_output=""
+
+measurements=["battery.charge","battery.voltage","battery.voltage.high","battery.voltage.low","battery.voltage.nominal","device.type","driver.name","driver.parameter.pollinterval","driver.parameter.port","driver.parameter.productid",
+              "driver.parameter.synchronous","driver.parameter.vendorid","driver.version","driver.version.internal","input.current.nominal","input.frequency","input.frequency.nominal","input.voltage","input.voltage.fault",
+              "input.voltage.nominal","output.voltage", "ups.beeper.status", "ups.delay.shutdown","ups.delay.start","ups.load","ups.productid","ups.status","ups.temperature","ups.type","ups.vendorid"]
+
+string_measurements=["device.type","driver.name","driver.parameter.port","driver.parameter.productid","driver.parameter.synchronous","driver.parameter.vendorid","driver.version","driver.version.internal",
+                     "ups.beeper.status","ups.productid","ups.status","ups.type","ups.vendorid"]
 
 p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
 
-for line in p.stdout.readlines(): #read and store result in log file
+for line in p.stdout.readlines():
     line = line.decode("utf-8").rstrip()
     key = line[:line.find(":")]
     value = line[line.find(":")+2:]
 
-    if key in measurements:
-        if key in string_measurements:
-            value = '"' + value + '"'
+    if key in measurements and key in string_measurements:
+        tag = key + "=" + value
+        if tag_output != "":
+            tag = "," + tag
+        tag_output += tag
+    if key in measurements and key not in string_measurements:
         measurement = key + "=" + value
         if output != "":
             measurement = "," + measurement
         output += measurement
 
-output = "ups_nut " + output.rstrip()
+output = "ups_nut," + tag_output.rstrip() + " " + output.rstrip()
 print(output, end='')
