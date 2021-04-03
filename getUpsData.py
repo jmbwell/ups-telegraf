@@ -2,6 +2,8 @@
 
 import subprocess
 
+FNULL = open(os.devnull, 'w')
+
 cmd="upsc ups"
 output=""
 # only needed measurement
