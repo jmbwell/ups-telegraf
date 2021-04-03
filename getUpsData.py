@@ -9,11 +9,11 @@ measurements=["battery.charge","battery.voltage","battery.runtime","input.voltag
             "ups.beeper.status", "ups.mfr","ups.model", "ups.serial", "ups.status", "ups.test.result"]
 # text measurement
 string_measurements=["battery.mfr.date", "battery.type", "battery.date", "device.mfr", "device.model","device.serial","device.type",
-			"driver.name", "driver.paramter.port", "driver.parameter.synchronous", "driver.version", "driver.version.data", "driver.version.internal", "input.sensitivity",
-			"ups.beeper.status", "ups.mfr","ups.model", "ups.serial", "ups.status", "ups.test.result", "ups.firmware", "ups.firmware.aux","ups.mfr.date", "ups.productid",
+            "driver.name", "driver.paramter.port", "driver.parameter.synchronous", "driver.version", "driver.version.data", "driver.version.internal", "input.sensitivity",
+            "ups.beeper.status", "ups.mfr","ups.model", "ups.serial", "ups.status", "ups.test.result", "ups.firmware", "ups.firmware.aux","ups.mfr.date", "ups.productid",
             "driver.parameter.port", "driver.parameter.syncronous"]
 
-p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
 
 for line in p.stdout.readlines(): #read and store result in log file
     line = line.decode("utf-8").rstrip()
@@ -29,4 +29,4 @@ for line in p.stdout.readlines(): #read and store result in log file
         output += measurement
 
 output = "ups_nut " + output.rstrip()
-print(output, end='')
+print(output)
